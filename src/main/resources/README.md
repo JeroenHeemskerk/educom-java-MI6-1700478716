@@ -1,0 +1,1 @@
+Place here icon and configuration files
