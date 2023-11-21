@@ -1,21 +1,22 @@
 package nu.educom.MI6;
-import java.util.Scanner;
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class Main
 {
-  public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
+  public static void main(String[] args)
+  {
     ArrayList<String> blackList = new ArrayList<>();
     ArrayList<String> loggedInList = new ArrayList<>();
 
-    // Test
-
     while (true)
     {
-      System.out.println("Voer je dienstnummer in:");
-      String input = scanner.nextLine();
+      String input = showInputDialog("Voer je dienstnummer in:");
 
+      if(input == null)
+      {
+        break;
+      }
       if (input.matches("\\d+"))
       {
         if (input.length() == 1 || input.length() == 2)
@@ -25,32 +26,30 @@ public class Main
         try
         {
           int number = Integer.parseInt(input);
-          System.out.println("Wat is de geheime code?");
-
-          if (number >= 1 && number <= 956 && !blackList.contains(input) && !loggedInList.contains(input))
-          {
-            String input2 = scanner.nextLine();
-            if ("For ThE Royal QUEEN".equals(input2))
-            {
-              System.out.println("Je bent nu ingelogd agent: " + input + "!");
+          if (number >= 1 && number <= 956 && !blackList.contains(input) && !loggedInList.contains(input)) {
+            String input2 = showInputDialog("Wat is de geheime code?");
+            if ("For ThE Royal QUEEN".equals(input2)) {
+              JOptionPane.showMessageDialog(null, "Je bent nu ingelogd agent: " + input + "!");
               loggedInList.add(input);
-            }
-            else
-            {
-              System.out.println("Je wordt nu geblacklist");
+            } else {
+              JOptionPane.showMessageDialog(null, "Je wordt nu geblacklist (access denied)");
               blackList.add(input);
             }
+          } else {
+            JOptionPane.showMessageDialog(null, "Ongeldig dienstnummer! (access denied)");
           }
-          else
-          {
-            System.out.println("Ongeldig dienstnummer!");
-          }
-        }
-        catch (NumberFormatException e)
-        {
-          System.out.println("Ongeldig dienstnummer! exception");
+        } catch (NumberFormatException e) {
+          JOptionPane.showMessageDialog(null, "Ongeldig dienstnummer! exception");
         }
       }
+      else
+      {
+        JOptionPane.showMessageDialog(null, "Ongeldig dienstnummer! (access denied)");
+      }
     }
+  }
+  private static String showInputDialog(String message)
+  {
+    return JOptionPane.showInputDialog(null, message);
   }
 }
