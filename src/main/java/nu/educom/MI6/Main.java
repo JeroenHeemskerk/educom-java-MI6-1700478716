@@ -9,6 +9,8 @@ public class Main
     ArrayList<String> blackList = new ArrayList<>();
     ArrayList<String> loggedInList = new ArrayList<>();
 
+    // Test
+
     while (true)
     {
       System.out.println("Voer je dienstnummer in:");
