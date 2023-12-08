@@ -19,6 +19,7 @@ public class Main
 {
   public static void main(String[] args)
   {
+    Database.openConnection();
     SwingUtilities.invokeLater(new Runnable()
     {
       public void run()
@@ -27,7 +28,15 @@ public class Main
         app.createAndShowGUI();
       }
     });
+    Runtime.getRuntime().addShutdownHook(new Thread()
+    {
+      public void run()
+      {
+        Database.closeConnection();
+      }
+    });
   }
+
 }
 
 class MI6Application

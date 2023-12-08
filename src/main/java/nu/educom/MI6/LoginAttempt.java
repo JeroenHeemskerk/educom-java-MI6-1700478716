@@ -12,9 +12,8 @@ public class LoginAttempt
 
     public void insertLoginAttempt(int dienstnummer, boolean loginSuccessful)
     {
-        db.connect();
-        String sqlInsert = "INSERT INTO login_attempts (dienstnummer, login_timestamp, login_successful) VALUES (?, ?, ?)";
         Connection conn = db.getConnection();
+        String sqlInsert = "INSERT INTO login_attempts (dienstnummer, login_timestamp, login_successful) VALUES (?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sqlInsert))
         {
@@ -37,17 +36,12 @@ public class LoginAttempt
             System.out.println("SQL Exception: " + e.getMessage());
             e.printStackTrace();
         }
-        finally
-        {
-            db.closeConnection();
-        }
     }
 
     public List<String> retrieveLoginAttempts(Timestamp currentLoginTimestamp)
     {
         List<String> failedAttempts = new ArrayList<>();
-        db.connect();
-        Connection conn = db.getConnection();
+        Connection conn = Database.getConnection();
         String sqlQuery =
                 "SELECT * FROM login_attempts " +
                         "WHERE login_successful = FALSE AND " +
@@ -72,17 +66,12 @@ public class LoginAttempt
             System.out.println("SQL Exception: " + e.getMessage());
             e.printStackTrace();
         }
-        finally
-        {
-            db.closeConnection();
-        }
         return failedAttempts;
     }
 
     public void saveBlacklistToDatabase(HashMap<String, Long[]> blackList)
     {
-        db.connect();
-        Connection conn = db.getConnection();
+        Connection conn = Database.getConnection();
         if(conn != null)
         {
             try
@@ -105,17 +94,12 @@ public class LoginAttempt
             {
                 ex.printStackTrace();
             }
-            finally
-            {
-                db.closeConnection();
-            }
         }
     }
 
     public void updateDatabaseBlacklist()
     {
-        db.connect();
-        Connection conn = db.getConnection();
+        Connection conn = Database.getConnection();
         if(conn != null)
         {
             try
@@ -152,17 +136,12 @@ public class LoginAttempt
             {
                 ex.printStackTrace();
             }
-            finally
-            {
-                db.closeConnection();
-            }
         }
     }
 
     public void loadBlacklistFromDatabase(HashMap<String, Long[]> databaseBlackList)
     {
-        db.connect();
-        Connection conn = db.getConnection();
+        Connection conn = Database.getConnection();
         if(conn != null)
         {
             try
@@ -184,10 +163,6 @@ public class LoginAttempt
             catch(SQLException ex)
             {
                 ex.printStackTrace();
-            }
-            finally
-            {
-                db.closeConnection();
             }
         }
     }

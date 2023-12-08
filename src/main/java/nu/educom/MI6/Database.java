@@ -4,11 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Database
-{
-    private Connection conn = null;
+public class Database {
+    private static Connection conn = null;
 
-    public void connect()
+    public static void openConnection()
     {
         String url = "jdbc:mysql://localhost:3306/myDB";
         String user = "root";
@@ -18,30 +17,32 @@ public class Database
         {
             conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to database");
-        } catch (SQLException e)
+        }
+        catch(SQLException e)
         {
             System.out.println("Connection failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public Connection getConnection()
+    public static Connection getConnection()
     {
         return conn;
     }
 
-    public void closeConnection()
+    public static void closeConnection()
     {
-        if (conn != null)
+        if(conn != null)
         {
             try
             {
                 conn.close();
                 System.out.println("Disconnected from database");
-            } catch (SQLException e)
-            {
+            }
+            catch (SQLException e) {
                 System.out.println("Failed to close the connection: " + e.getMessage());
             }
         }
     }
 }
+

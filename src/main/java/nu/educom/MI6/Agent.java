@@ -26,8 +26,7 @@ public class Agent
         boolean isAuthenticated = false;
         boolean licenceToKill = false;
         String expirationDate = null;
-        db.connect();
-        Connection conn = db.getConnection();
+        Connection conn = Database.getConnection();
         String query = "SELECT licence_to_kill, expiration_date FROM agents WHERE dienstnummer = ? AND geheime_code = ? AND active = 1";
 
         try(PreparedStatement stmt = conn.prepareStatement(query))
@@ -45,10 +44,6 @@ public class Agent
         catch(SQLException e)
         {
             System.out.println("Query failed: " + e.getMessage());
-        }
-        finally
-        {
-            db.closeConnection();
         }
         return new AgentAuthResult(isAuthenticated, licenceToKill, expirationDate);
     }
